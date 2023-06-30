@@ -13,7 +13,7 @@
         android:layout_height="210dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_result"
         android:layout_width="300dp"
         android:layout_height="112dp"
         android:layout_gravity="center"
