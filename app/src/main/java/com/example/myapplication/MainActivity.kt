@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,17 +36,16 @@ class MainActivity : AppCompatActivity() {
         mTextResult = findViewById(R.id.textView_result)
 
 
-
-        val btn00:Button = findViewById(R.id.btn0)
-        val btn01:Button = findViewById(R.id.btn1)
-        val btn02:Button = findViewById(R.id.btn2)
-        val btn03:Button = findViewById(R.id.btn3)
-        val btn04:Button = findViewById(R.id.btn4)
-        val btn05:Button = findViewById(R.id.btn5)
-        val btn06:Button = findViewById(R.id.btn6)
-        val btn07:Button = findViewById(R.id.btn7)
-        val btn08:Button = findViewById(R.id.btn8)
-        val btn09:Button = findViewById(R.id.btn9)
+        val btn00: Button = findViewById(R.id.btn0)
+        val btn01: Button = findViewById(R.id.btn1)
+        val btn02: Button = findViewById(R.id.btn2)
+        val btn03: Button = findViewById(R.id.btn3)
+        val btn04: Button = findViewById(R.id.btn4)
+        val btn05: Button = findViewById(R.id.btn5)
+        val btn06: Button = findViewById(R.id.btn6)
+        val btn07: Button = findViewById(R.id.btn7)
+        val btn08: Button = findViewById(R.id.btn8)
+        val btn09: Button = findViewById(R.id.btn9)
         val btnWaru: Button = findViewById(R.id.btnWaru)
         val btnKakeru: Button = findViewById(R.id.btnKakeru)
         val btnMainasu: Button = findViewById(R.id.btnMainasu)
@@ -87,15 +85,9 @@ class MainActivity : AppCompatActivity() {
 
             var afterValue = ""
 
-            when(btn.id){
+            when (btn.id) {
 
-                R.id.btn0 -> {
-
-                    if(mTextResult.text.isNotEmpty()){
-
-                        mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
-                    }
-                }
+                R.id.btn0,
                 R.id.btn1,
                 R.id.btn2,
                 R.id.btn3,
@@ -104,8 +96,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.btn6,
                 R.id.btn7,
                 R.id.btn8,
-                R.id.btn9  -> {
-                    mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
+                R.id.btn9 -> {
+
+                    if (mTextResult.text != "0") {
+
+                        mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
+                    } else {
+                        mTextResult.text = btn.text
+                    }
+
                 }
 
                 R.id.btnIkore -> {
@@ -117,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.btnPurasu -> {
-                    if(mTextResult.text == ""){
+                    if (mTextResult.text == "") {
                         return
                     }
                     when {
@@ -126,27 +125,43 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         mTextResult.text.contains(CHAR_MINUS) -> {
-                            if (mTextResult.text.substring(0,1) == CHAR_MINUS) {
-                                if (mTextResult.text.substring(1).contains(CHAR_MINUS)){
-                                    afterValue = calcSymbolReplace(mTextResult.text.substring(1),
-                                        CHAR_MINUS, CHAR_PLUS)
+                            if (mTextResult.text.substring(0, 1) == CHAR_MINUS) {
+                                if (mTextResult.text.substring(1).contains(CHAR_MINUS)) {
+                                    afterValue = calcSymbolReplace(
+                                        mTextResult.text.substring(1),
+                                        CHAR_MINUS, CHAR_PLUS
+                                    )
                                     afterValue = "-$afterValue"
-                                }else{
-                                    mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
+                                } else {
+                                    mTextResult.text =
+                                        String.format("%s%s", mTextResult.text, btn.text)
                                 }
-                            }else{
+                            } else {
                                 when {
                                     mTextResult.text.substring(1).contains(CHAR_MINUS) -> {
-                                        afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MINUS, CHAR_PLUS)
+                                        afterValue = calcSymbolReplace(
+                                            mTextResult.text.toString(),
+                                            CHAR_MINUS,
+                                            CHAR_PLUS
+                                        )
                                     }
                                     mTextResult.text.substring(1).contains(CHAR_MULTIPLY) -> {
-                                        afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MULTIPLY, CHAR_PLUS)
+                                        afterValue = calcSymbolReplace(
+                                            mTextResult.text.toString(),
+                                            CHAR_MULTIPLY,
+                                            CHAR_PLUS
+                                        )
                                     }
                                     mTextResult.text.substring(1).contains(CHAR_MINUS) -> {
-                                        afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_DIVIDE, CHAR_PLUS)
+                                        afterValue = calcSymbolReplace(
+                                            mTextResult.text.toString(),
+                                            CHAR_DIVIDE,
+                                            CHAR_PLUS
+                                        )
                                     }
                                     else -> {
-                                        mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
+                                        mTextResult.text =
+                                            String.format("%s%s", mTextResult.text, btn.text)
                                     }
 
                                 }
@@ -155,13 +170,21 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         mTextResult.text.contains(CHAR_MULTIPLY) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MULTIPLY, CHAR_PLUS)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_MULTIPLY,
+                                CHAR_PLUS
+                            )
                         }
 
                         mTextResult.text.contains(CHAR_DIVIDE) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_DIVIDE, CHAR_PLUS)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_DIVIDE,
+                                CHAR_PLUS
+                            )
                         }
-                        else ->{
+                        else -> {
                             mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
                         }
 
@@ -169,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.btnMainasu -> {
-                    if(mTextResult.text == ""){
+                    if (mTextResult.text == "") {
                         return
                     }
                     when {
@@ -178,17 +201,29 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         mTextResult.text.contains(CHAR_PLUS) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_PLUS, CHAR_MINUS)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_PLUS,
+                                CHAR_MINUS
+                            )
                         }
 
                         mTextResult.text.contains(CHAR_MULTIPLY) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MULTIPLY, CHAR_MINUS)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_MULTIPLY,
+                                CHAR_MINUS
+                            )
                         }
 
                         mTextResult.text.contains(CHAR_DIVIDE) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_DIVIDE, CHAR_MINUS)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_DIVIDE,
+                                CHAR_MINUS
+                            )
                         }
-                        else ->{
+                        else -> {
                             mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
                         }
 
@@ -196,7 +231,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.btnKakeru -> {
-                    if(mTextResult.text == ""){
+                    if (mTextResult.text == "") {
                         return
                     }
                     when {
@@ -205,33 +240,50 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         mTextResult.text.contains(CHAR_PLUS) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_PLUS, CHAR_MINUS)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_PLUS,
+                                CHAR_MINUS
+                            )
                         }
 
                         mTextResult.text.contains(CHAR_MINUS) -> {
-                            if(mTextResult.text.substring(0,1) == CHAR_MINUS){
-                                if(mTextResult.text.substring(1).contains(CHAR_MINUS)){
-                                    afterValue = calcSymbolReplace(mTextResult.text.substring(1), CHAR_MINUS, CHAR_MULTIPLY)
+                            if (mTextResult.text.substring(0, 1) == CHAR_MINUS) {
+                                if (mTextResult.text.substring(1).contains(CHAR_MINUS)) {
+                                    afterValue = calcSymbolReplace(
+                                        mTextResult.text.substring(1),
+                                        CHAR_MINUS,
+                                        CHAR_MULTIPLY
+                                    )
                                     afterValue = "-$afterValue"
                                 } else {
-                                    mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
+                                    mTextResult.text =
+                                        String.format("%s%s", mTextResult.text, btn.text)
                                 }
                             } else {
-                                afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MINUS, CHAR_MULTIPLY)
+                                afterValue = calcSymbolReplace(
+                                    mTextResult.text.toString(),
+                                    CHAR_MINUS,
+                                    CHAR_MULTIPLY
+                                )
                             }
                         }
 
                         mTextResult.text.contains(CHAR_DIVIDE) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_DIVIDE, CHAR_MULTIPLY)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_DIVIDE,
+                                CHAR_MULTIPLY
+                            )
                         }
-                        else ->{
+                        else -> {
                             mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
                         }
                     }
                 }
 
                 R.id.btnWaru -> {
-                    if(mTextResult.text == ""){
+                    if (mTextResult.text == "") {
                         return
                     }
                     when {
@@ -240,26 +292,43 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         mTextResult.text.contains(CHAR_PLUS) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_PLUS, CHAR_DIVIDE)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_PLUS,
+                                CHAR_DIVIDE
+                            )
                         }
 
                         mTextResult.text.contains(CHAR_MINUS) -> {
-                            if(mTextResult.text.substring(0,1) == CHAR_MINUS){
-                                if(mTextResult.text.substring(1).contains(CHAR_MINUS)){
-                                    afterValue = calcSymbolReplace(mTextResult.text.substring(1), CHAR_MINUS, CHAR_DIVIDE)
+                            if (mTextResult.text.substring(0, 1) == CHAR_MINUS) {
+                                if (mTextResult.text.substring(1).contains(CHAR_MINUS)) {
+                                    afterValue = calcSymbolReplace(
+                                        mTextResult.text.substring(1),
+                                        CHAR_MINUS,
+                                        CHAR_DIVIDE
+                                    )
                                     afterValue = "-$afterValue"
                                 } else {
-                                    mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
+                                    mTextResult.text =
+                                        String.format("%s%s", mTextResult.text, btn.text)
                                 }
                             } else {
-                                afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MINUS, CHAR_DIVIDE)
+                                afterValue = calcSymbolReplace(
+                                    mTextResult.text.toString(),
+                                    CHAR_MINUS,
+                                    CHAR_DIVIDE
+                                )
                             }
                         }
 
                         mTextResult.text.contains(CHAR_MULTIPLY) -> {
-                            afterValue = calcSymbolReplace(mTextResult.text.toString(), CHAR_MULTIPLY, CHAR_DIVIDE)
+                            afterValue = calcSymbolReplace(
+                                mTextResult.text.toString(),
+                                CHAR_MULTIPLY,
+                                CHAR_DIVIDE
+                            )
                         }
-                        else ->{
+                        else -> {
                             mTextResult.text = String.format("%s%s", mTextResult.text, btn.text)
                         }
                     }
@@ -267,7 +336,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            if(afterValue != ""){
+            if (afterValue != "") {
                 mTextResult.text = afterValue
             }
         }
@@ -275,16 +344,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun calcSymbolReplace(replaceValue: String, oldSymbol: String, newSymbol: String): String {
-        return replaceValue.replace(oldSymbol,newSymbol)
+    private fun calcSymbolReplace(
+        replaceValue: String,
+        oldSymbol: String,
+        newSymbol: String
+    ): String {
+        return replaceValue.replace(oldSymbol, newSymbol)
     }
 
-    private fun executeCalc(){
+    private fun executeCalc() {
 
         val text = mTextResult.text.toString()
 
         var checkValue = text
-        if (mTextResult.text.substring(0, 1) == CHAR_MINUS){
+        if (mTextResult.text.substring(0, 1) == CHAR_MINUS) {
             checkValue = mTextResult.text.substring(1)
         }
 
@@ -302,15 +375,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             checkValue.contains(CHAR_MINUS) -> {
-                if (mTextResult.text.substring(0,1) == CHAR_MINUS) {
-                    val symbolIndex = text.indexOf(CHAR_MINUS,1)
+                if (mTextResult.text.substring(0, 1) == CHAR_MINUS) {
+                    val symbolIndex = text.indexOf(CHAR_MINUS, 1)
                     val leftValue = text.substring(startIndex, symbolIndex)
                     val rightValue = text.substring(symbolIndex + 1)
 
-                    answer = (leftValue.toDouble() + rightValue.toDouble()).toString()
+                    answer = (leftValue.toDouble() - rightValue.toDouble()).toString()
 
                 } else {
-                    val symbolIndex = text.indexOf(CHAR_MINUS,1)
+                    val symbolIndex = text.indexOf(CHAR_MINUS)
                     val leftValue = text.substring(startIndex, symbolIndex)
                     val rightValue = text.substring(symbolIndex + 1)
 
@@ -342,14 +415,14 @@ class MainActivity : AppCompatActivity() {
 
         answer = roundValue(answer)
 
-        if (answer != ""){
+        if (answer != "") {
             val regex = Regex(".0\$")
             mTextResult.text = regex.replace(answer, "")
         }
 
     }
 
-    private fun roundValue(value: String) :String {
+    private fun roundValue(value: String): String {
         return ((value.toDouble() * 10.0).roundToLong() / 10.0).toString()
     }
 }
