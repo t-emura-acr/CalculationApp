@@ -426,3 +426,6 @@ class MainActivity : AppCompatActivity() {
         return ((value.toDouble() * 10.0).roundToLong() / 10.0).toString()
     }
 }
+
+
+
